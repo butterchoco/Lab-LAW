@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { FileController } from './file.controller';
 import { FileService } from './file.service';
+import { upload_host } from '../config';
 
 @Module({
   imports: [
@@ -10,7 +11,7 @@ import { FileService } from './file.service';
         name: 'SAVING_SERVICE',
         transport: Transport.TCP,
         options: {
-          host: '0.0.0.0',
+          host: upload_host,
           port: 8082,
         },
       },

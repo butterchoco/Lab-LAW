@@ -1,0 +1,19 @@
+version: "3"
+services:
+  compression:
+    build: ./service-1
+    ports:
+      - 8081:8081
+      - 8001:8001
+    environment:
+      COMPRESSION_HOST: compression
+      UPLOAD_HOST: upload
+  upload:
+    build: ./service-2
+    ports:
+      - 8082:8082
+      - 8002:8002
+    environment:
+      DB_HOST: mongo
+      COMPRESSION_HOST: compression
+      UPLOAD_HOST: upload

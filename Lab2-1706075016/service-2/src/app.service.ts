@@ -5,4 +5,6 @@ export class AppService {
   getHello(): string {
     return 'Welcome to service 2!';
   }
+
+  uploadFile(file: File) {}
 }
