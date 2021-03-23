@@ -1,9 +1,14 @@
-import { Injectable } from '@nestjs/common';
-var JSZip = require('jszip');
-var fs = require('fs');
+import { Inject, Injectable } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
+import JSZip = require('jszip');
 
 @Injectable()
 export class FileService {
+  constructor(
+    @Inject('SAVING_SERVICE')
+    private readonly client: ClientProxy,
+  ) {}
+
   getFileAvailable() {
     return 'Available Files';
   }
@@ -13,11 +18,7 @@ export class FileService {
     files.forEach((file) => {
       zip.file(file.originalname, file.buffer);
     });
-    zip
-      .generateNodeStream({ type: 'nodebuffer', streamFiles: true })
-      .pipe(fs.createWriteStream('out.zip'))
-      .on('finish', function () {
-        console.log('out.zip written.');
-      });
+    const result = await zip.generateAsync({ type: 'nodebuffer' });
+    return this.client.send('save', { file: result });
   }
 }

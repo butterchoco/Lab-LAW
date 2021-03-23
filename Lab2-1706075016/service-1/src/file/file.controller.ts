@@ -19,10 +19,9 @@ export class FileController {
 
   @Post('upload')
   @UseInterceptors(FilesInterceptor('files'))
-  uploadFile(@UploadedFiles() files: Express.Multer.File[]) {
+  async uploadFile(@UploadedFiles() files: Express.Multer.File[]) {
     if (files) {
-      this.fileService.compressFiles(files);
-      return 'Success';
+      return this.fileService.compressFiles(files);
     } else {
       return 'Failed';
     }
