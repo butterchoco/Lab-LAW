@@ -18,14 +18,24 @@ export class AppController {
   @MessagePattern('upload')
   async uploadFile(data: FileData) {
     if (data) {
-      const metadataFile = await this.appService.uploadFile(data.fileName);
-      if (!metadataFile)
+      const metadataFile: any = await this.appService.uploadFile(data.fileName);
+      if (!metadataFile) {
         throw new HttpException(
           'Upload tidak berhasil',
           HttpStatus.SERVICE_UNAVAILABLE,
         );
-
+      }
       return this.appService.sendMetadata(metadataFile);
+    } else {
+      throw new HttpException('Form tidak valid', HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  @MessagePattern('getDownloadLink')
+  async getDownloadLink(urlFile: string) {
+    if (urlFile) {
+      const metadataFile: any = await this.appService.getDownloadLink(urlFile);
+      return metadataFile;
     } else {
       throw new HttpException('Form tidak valid', HttpStatus.BAD_REQUEST);
     }

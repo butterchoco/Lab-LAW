@@ -3,6 +3,10 @@ import { ClientProxy } from '@nestjs/microservices';
 const dropboxV2Api = require('dropbox-v2-api');
 const fs = require('fs');
 
+const dropbox = dropboxV2Api.authenticate({
+  token: 'RUEs-BgrPEEAAAAAAAAAAazfoiO8tiSjfsBmeIasHzK9YpUPI2edGeO2rTz9Skqs',
+});
+
 @Injectable()
 export class AppService {
   constructor(
@@ -15,12 +19,6 @@ export class AppService {
   }
 
   async uploadFile(fileName: string) {
-    const token =
-      'RUEs-BgrPEEAAAAAAAAAAazfoiO8tiSjfsBmeIasHzK9YpUPI2edGeO2rTz9Skqs';
-    const dropbox = dropboxV2Api.authenticate({
-      token,
-    });
-
     const basePath = '../temp/';
 
     const uploadStream = new Promise((resolve, reject) => {
@@ -59,5 +57,32 @@ export class AppService {
 
   sendMetadata(metadata: any) {
     return this.client.send('save_metadata', metadata);
+  }
+
+  async getDownloadLink(path: string) {
+    const downloadStream = new Promise((resolve, reject) => {
+      dropbox(
+        {
+          resource: 'files/get_temporary_link',
+          parameters: { path },
+        },
+        (err: any, result: any, _) => {
+          if (err) {
+            reject(null);
+          } else {
+            resolve({ link: result.link });
+          }
+        },
+      );
+    });
+
+    const link = await downloadStream
+      .then((res) => {
+        return res;
+      })
+      .catch((e) => {
+        return e;
+      });
+    return link;
   }
 }
