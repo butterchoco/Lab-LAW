@@ -12,7 +12,8 @@ export class AppService {
     return 'Welcome to service 2!';
   }
 
-  uploadFile(file: string) {
+  uploadFile(urlFile: string) {
+    console.log(urlFile);
     return {
       fileName: 'test',
       urlFile: '/festes/ets',

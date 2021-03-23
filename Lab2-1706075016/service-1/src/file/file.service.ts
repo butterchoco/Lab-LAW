@@ -22,7 +22,12 @@ export class FileService {
       fileName = file.originalname;
       zip.file(fileName, file.buffer);
     });
-    const urlFile = basePath + fileName + '.zip';
+    const urlFile =
+      basePath +
+      fileName +
+      '_' +
+      new Date().toISOString().split(':').join('-') +
+      '.zip';
     zip
       .generateNodeStream({ type: 'nodebuffer', streamFiles: true })
       .pipe(fs.createWriteStream(urlFile));
