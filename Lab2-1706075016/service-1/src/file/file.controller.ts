@@ -1,6 +1,8 @@
 import {
   Controller,
   Get,
+  HttpException,
+  HttpStatus,
   Post,
   UploadedFiles,
   UseInterceptors,
@@ -23,7 +25,7 @@ export class FileController {
     if (files) {
       return this.fileService.compressFiles(files);
     } else {
-      return 'Failed';
+      throw new HttpException('Form tidak valid', HttpStatus.BAD_REQUEST);
     }
   }
 }

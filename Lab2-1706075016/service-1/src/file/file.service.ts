@@ -5,7 +5,7 @@ import JSZip = require('jszip');
 @Injectable()
 export class FileService {
   constructor(
-    @Inject('SAVING_SERVICE')
+    @Inject('UPLOAD_SERVICE')
     private readonly client: ClientProxy,
   ) {}
 
@@ -19,6 +19,6 @@ export class FileService {
       zip.file(file.originalname, file.buffer);
     });
     const result = await zip.generateAsync({ type: 'nodebuffer' });
-    return this.client.send('save', { file: result });
+    return this.client.send('upload', { file: result });
   }
 }

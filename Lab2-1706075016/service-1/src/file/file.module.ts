@@ -8,7 +8,7 @@ import { upload_host } from '../config';
   imports: [
     ClientsModule.register([
       {
-        name: 'SAVING_SERVICE',
+        name: 'UPLOAD_SERVICE',
         transport: Transport.TCP,
         options: {
           host: upload_host,
