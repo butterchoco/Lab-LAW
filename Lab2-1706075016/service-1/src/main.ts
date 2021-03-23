@@ -9,7 +9,12 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.connectMicroservice({
     transport: Transport.TCP,
-    options: { host: compression_host, port: 8081 },
+    options: {
+      host: compression_host,
+      port: 8081,
+      retryAttempts: 5,
+      retryDelay: 3000,
+    },
   });
   await app.startAllMicroservicesAsync();
   app.enableCors();

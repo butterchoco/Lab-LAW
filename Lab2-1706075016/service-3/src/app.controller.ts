@@ -13,8 +13,8 @@ export class AppController {
 
   @MessagePattern('save_metadata')
   save_metadata(data: any) {
-    console.log(data);
     if (data) {
+      console.log(data);
       return 'Success';
     } else {
       return 'Failed';

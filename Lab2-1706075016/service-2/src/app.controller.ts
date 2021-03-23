@@ -1,9 +1,9 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { AppService } from './app.service';
 
 interface FileData {
-  urlFile: string;
+  fileName: string;
 }
 
 @Controller()
@@ -18,10 +18,16 @@ export class AppController {
   @MessagePattern('upload')
   async uploadFile(data: FileData) {
     if (data) {
-      const metadataFile = await this.appService.uploadFile(data.urlFile);
+      const metadataFile = await this.appService.uploadFile(data.fileName);
+      if (!metadataFile)
+        throw new HttpException(
+          'Upload tidak berhasil',
+          HttpStatus.SERVICE_UNAVAILABLE,
+        );
+
       return this.appService.sendMetadata(metadataFile);
     } else {
-      return 'Failed';
+      throw new HttpException('Form tidak valid', HttpStatus.BAD_REQUEST);
     }
   }
 }

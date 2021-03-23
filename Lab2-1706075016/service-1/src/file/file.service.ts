@@ -16,21 +16,19 @@ export class FileService {
 
   async compressFiles(files: Express.Multer.File[]) {
     const zip: typeof JSZip = new JSZip();
-    const basePath = './temp/';
+    const basePath = '../temp/';
+    fs.mkdirSync(basePath);
     let fileName = 'out';
     files.forEach((file) => {
       fileName = file.originalname;
       zip.file(fileName, file.buffer);
     });
-    const urlFile =
-      basePath +
-      fileName +
-      '_' +
-      new Date().toISOString().split(':').join('-') +
-      '.zip';
+    fileName =
+      fileName + '_' + new Date().toISOString().split(':').join('-') + '.zip';
+    const urlFile = basePath + fileName;
     zip
       .generateNodeStream({ type: 'nodebuffer', streamFiles: true })
       .pipe(fs.createWriteStream(urlFile));
-    return this.client.send('upload', { urlFile: urlFile });
+    return this.client.send('upload', { fileName });
   }
 }
