@@ -1,12 +1,30 @@
-import { Controller, Get } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  UploadedFiles,
+  UseInterceptors,
+} from '@nestjs/common';
+import { FilesInterceptor } from '@nestjs/platform-express';
 import { FileService } from './file.service';
 
 @Controller('file')
 export class FileController {
-    constructor(private readonly fileService : FileService) {}
+  constructor(private readonly fileService: FileService) {}
 
-    @Get()
-    getFileAvailable() {
-        return this.fileService.getFileAvailable();
+  @Get()
+  getFileAvailable() {
+    return this.fileService.getFileAvailable();
+  }
+
+  @Post('upload')
+  @UseInterceptors(FilesInterceptor('files'))
+  uploadFile(@UploadedFiles() files: Express.Multer.File[]) {
+    if (files) {
+      this.fileService.compressFiles(files);
+      return 'Success';
+    } else {
+      return 'Failed';
     }
+  }
 }
