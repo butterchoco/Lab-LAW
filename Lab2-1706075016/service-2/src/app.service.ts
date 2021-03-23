@@ -12,7 +12,7 @@ export class AppService {
     return 'Welcome to service 2!';
   }
 
-  uploadFile(file: Buffer) {
+  uploadFile(file: string) {
     return {
       fileName: 'test',
       urlFile: '/festes/ets',

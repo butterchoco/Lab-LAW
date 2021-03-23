@@ -3,7 +3,7 @@ import { MessagePattern } from '@nestjs/microservices';
 import { AppService } from './app.service';
 
 interface FileData {
-  file: Buffer;
+  urlFile: string;
 }
 
 @Controller()
@@ -18,7 +18,7 @@ export class AppController {
   @MessagePattern('upload')
   async uploadFile(data: FileData) {
     if (data) {
-      const metadataFile = await this.appService.uploadFile(data.file);
+      const metadataFile = await this.appService.uploadFile(data.urlFile);
       return this.appService.sendMetadata(metadataFile);
     } else {
       return 'Failed';
