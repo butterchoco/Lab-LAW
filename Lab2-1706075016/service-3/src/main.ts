@@ -16,6 +16,7 @@ async function bootstrap() {
       retryDelay: 3000,
     },
   });
+  app.enableCors();
   await app.startAllMicroservicesAsync();
   await app.listen(port);
   Logger.log('CRUD microservice running at ' + port);

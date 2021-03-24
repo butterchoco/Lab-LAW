@@ -1,11 +1,13 @@
-import { Module } from '@nestjs/common';
+import { HttpModule, Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { FileController } from './file.controller';
 import { FileService } from './file.service';
 import { upload_host } from '../config';
+import { DiscordStrategy } from '../github.strategy';
 
 @Module({
   imports: [
+    HttpModule,
     ClientsModule.register([
       {
         name: 'UPLOAD_SERVICE',
@@ -18,6 +20,6 @@ import { upload_host } from '../config';
     ]),
   ],
   controllers: [FileController],
-  providers: [FileService],
+  providers: [FileService, DiscordStrategy],
 })
 export class FileModule {}

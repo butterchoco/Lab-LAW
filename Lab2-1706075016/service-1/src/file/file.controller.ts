@@ -5,8 +5,10 @@ import {
   HttpStatus,
   Post,
   UploadedFiles,
+  UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { FileService } from './file.service';
 
@@ -22,6 +24,7 @@ export class FileController {
   @Post('compress')
   @UseInterceptors(FilesInterceptor('files'))
   async uploadFile(@UploadedFiles() files: Express.Multer.File[]) {
+    console.log(files);
     if (files) {
       return this.fileService.compressFiles(files);
     } else {
