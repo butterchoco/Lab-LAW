@@ -52,7 +52,6 @@ export class AppController {
     originalname: string;
     buffer: string;
   }) {
-    console.log(file);
     return this.appService.uploadHelper(file);
   }
 }

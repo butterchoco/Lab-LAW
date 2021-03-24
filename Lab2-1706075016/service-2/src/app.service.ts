@@ -64,9 +64,11 @@ export class AppService {
           HttpStatus.SERVICE_UNAVAILABLE,
         );
       }
-      console.log(metadataFile);
       const link = `${upload_host}:${upload_port}/?id=${metadataFile.id}`;
-      this.client.emit('save_metadata', metadataFile);
+      this.client.emit('metadata/create', {
+        name: metadataFile.name,
+        url: link,
+      });
       return { link };
     } else {
       throw new HttpException('Form tidak valid', HttpStatus.BAD_REQUEST);
