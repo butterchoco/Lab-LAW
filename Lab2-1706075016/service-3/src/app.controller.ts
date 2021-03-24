@@ -1,4 +1,11 @@
-import { Controller, Get } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Post,
+} from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 import { AppService } from './app.service';
 
@@ -11,13 +18,14 @@ export class AppController {
     return this.appService.getHello();
   }
 
+  @Post('metadata/create')
   @MessagePattern('save_metadata')
-  save_metadata(data: any) {
+  save_metadata(@Body('data') data: { name: string; url: string }) {
+    console.log(data);
     if (data) {
-      console.log(data);
-      return 'Success';
+      return this.appService.saveMetadata(data);
     } else {
-      return 'Failed';
+      throw new HttpException('Form tidak valid', HttpStatus.BAD_REQUEST);
     }
   }
 }
