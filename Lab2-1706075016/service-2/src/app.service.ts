@@ -36,10 +36,8 @@ export class AppService {
           } else {
             fs.rmdirSync(basePath, { recursive: true });
             resolve({
-              id: result.id,
               name: result.name,
               url: result.path_display,
-              created_at: new Date().toISOString(),
             });
           }
         },

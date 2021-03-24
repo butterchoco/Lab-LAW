@@ -3,7 +3,7 @@ import { MessagePattern } from '@nestjs/microservices';
 import { AppService } from './app.service';
 
 interface FileData {
-  fileName: string;
+  zipName: string;
 }
 
 @Controller()
@@ -18,13 +18,14 @@ export class AppController {
   @MessagePattern('upload')
   async uploadFile(data: FileData) {
     if (data) {
-      const metadataFile: any = await this.appService.uploadFile(data.fileName);
+      const metadataFile: any = await this.appService.uploadFile(data.zipName);
       if (!metadataFile) {
         throw new HttpException(
           'Upload tidak berhasil',
           HttpStatus.SERVICE_UNAVAILABLE,
         );
       }
+      console.log(metadataFile);
       return this.appService.sendMetadata(metadataFile);
     } else {
       throw new HttpException('Form tidak valid', HttpStatus.BAD_REQUEST);

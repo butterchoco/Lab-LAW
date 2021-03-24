@@ -17,18 +17,18 @@ export class FileService {
   async compressFiles(files: Express.Multer.File[]) {
     const zip: typeof JSZip = new JSZip();
     const basePath = '../temp/';
-    fs.mkdirSync(basePath);
-    let fileName = 'out';
+    if (!fs.existsSync(basePath)) fs.mkdirSync(basePath);
+    let zipName = 'example';
     files.forEach((file) => {
-      fileName = file.originalname;
-      zip.file(fileName, file.buffer);
+      console.log(file);
+      zip.file(file.originalname, file.buffer);
     });
-    fileName =
-      fileName + '_' + new Date().toISOString().split(':').join('-') + '.zip';
-    const urlFile = basePath + fileName;
+    zipName =
+      zipName + '_' + new Date().toISOString().split(':').join('-') + '.zip';
+    const urlFile = basePath + zipName;
     zip
       .generateNodeStream({ type: 'nodebuffer', streamFiles: true })
       .pipe(fs.createWriteStream(urlFile));
-    return this.client.send('upload', { fileName });
+    return this.client.send('upload', { zipName });
   }
 }

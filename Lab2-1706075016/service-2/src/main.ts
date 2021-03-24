@@ -18,6 +18,6 @@ async function bootstrap() {
   });
   await app.startAllMicroservicesAsync();
   await app.listen(port);
-  Logger.log('Saving microservice running at ' + port);
+  Logger.log('Uploading microservice running at ' + port);
 }
 bootstrap();
