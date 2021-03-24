@@ -1,44 +1,58 @@
-import { Controller, Get, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpException,
+  HttpStatus,
+  Post,
+  Query,
+  Res,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
+import { Response } from 'express';
 import { MessagePattern } from '@nestjs/microservices';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { AppService } from './app.service';
-
-interface FileData {
-  zipName: string;
-}
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
-
-  @MessagePattern('upload')
-  async uploadFile(data: FileData) {
-    if (data) {
-      const metadataFile: any = await this.appService.uploadFile(data.zipName);
-      if (!metadataFile) {
-        throw new HttpException(
-          'Upload tidak berhasil',
-          HttpStatus.SERVICE_UNAVAILABLE,
-        );
-      }
-      console.log(metadataFile);
-      return this.appService.sendMetadata(metadataFile);
+  async getDownloadLink(@Query('id') id: string, @Res() res: Response) {
+    if (id) {
+      const data = await this.appService.getBufferData({ id: Number(id) });
+      const buffer = Buffer.from(JSON.parse(data.buffer));
+      res.set('Content-Type', 'application/zip');
+      res.set('Content-Disposition', `attachment; filename=${data.name}`);
+      res.set('Content-Length', buffer.length.toString());
+      res.send(buffer);
     } else {
-      throw new HttpException('Form tidak valid', HttpStatus.BAD_REQUEST);
+      return this.appService.getHello();
     }
   }
 
-  @MessagePattern('getDownloadLink')
-  async getDownloadLink(urlFile: string) {
-    if (urlFile) {
-      const metadataFile: any = await this.appService.getDownloadLink(urlFile);
-      return metadataFile;
-    } else {
-      throw new HttpException('Form tidak valid', HttpStatus.BAD_REQUEST);
-    }
+  @Post('/file/upload')
+  @UseInterceptors(FileInterceptor('file'))
+  async uploadFileHTTP(@UploadedFile() file: Express.Multer.File) {
+    const tempFile = {
+      fieldname: file.fieldname,
+      size: file.size,
+      originalname: file.originalname,
+      buffer: JSON.stringify(file.buffer),
+    };
+    return this.appService.uploadHelper(tempFile);
+  }
+
+  @MessagePattern('/file/upload')
+  async uploadFile(file: {
+    fieldname: string;
+    size: Number;
+    originalname: string;
+    buffer: string;
+  }) {
+    console.log(file);
+    return this.appService.uploadHelper(file);
   }
 }

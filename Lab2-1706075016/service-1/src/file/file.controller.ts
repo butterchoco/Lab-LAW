@@ -19,7 +19,7 @@ export class FileController {
     return this.fileService.getFileAvailable();
   }
 
-  @Post('upload')
+  @Post('compress')
   @UseInterceptors(FilesInterceptor('files'))
   async uploadFile(@UploadedFiles() files: Express.Multer.File[]) {
     if (files) {

@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
+import JsZip from 'jszip';
 var JSZip = require('jszip');
-var fs = require('fs');
 
 @Injectable()
 export class FileService {
@@ -15,20 +15,21 @@ export class FileService {
   }
 
   async compressFiles(files: Express.Multer.File[]) {
-    const zip: typeof JSZip = new JSZip();
-    const basePath = '../temp/';
-    if (!fs.existsSync(basePath)) fs.mkdirSync(basePath);
-    let zipName = 'example';
+    const zip: JsZip = new JSZip();
     files.forEach((file) => {
-      console.log(file);
       zip.file(file.originalname, file.buffer);
     });
-    zipName =
-      zipName + '_' + new Date().toISOString().split(':').join('-') + '.zip';
-    const urlFile = basePath + zipName;
-    zip
-      .generateNodeStream({ type: 'nodebuffer', streamFiles: true })
-      .pipe(fs.createWriteStream(urlFile));
-    return this.client.send('upload', { zipName });
+    const zipBuffer = await zip.generateAsync({
+      type: 'nodebuffer',
+      streamFiles: true,
+    });
+    const tempFile = {
+      fieldname: 'file',
+      size: zipBuffer.length,
+      buffer: JSON.stringify(zipBuffer),
+      originalname:
+        'example' + new Date().toISOString().split(':').join('.') + '.zip',
+    };
+    return this.client.send('/file/upload', tempFile);
   }
 }
