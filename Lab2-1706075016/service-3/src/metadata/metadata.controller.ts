@@ -23,7 +23,6 @@ export class MetadataController {
   @Post('create')
   @MessagePattern('metadata/create')
   saveMetadata(@Body('data') data: { name: string; url: string }) {
-    console.log(data);
     if (data && data.name && data.url) {
       return this.metadataService.saveMetadata(data);
     } else {

@@ -3,7 +3,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { FileController } from './file.controller';
 import { FileService } from './file.service';
 import { upload_host } from '../config';
-import { DiscordStrategy } from '../github.strategy';
 
 @Module({
   imports: [
@@ -20,6 +19,6 @@ import { DiscordStrategy } from '../github.strategy';
     ]),
   ],
   controllers: [FileController],
-  providers: [FileService, DiscordStrategy],
+  providers: [FileService],
 })
 export class FileModule {}

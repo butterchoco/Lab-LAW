@@ -22,9 +22,9 @@ export class FileController {
   }
 
   @Post('compress')
+  @UseGuards(AuthGuard('github'))
   @UseInterceptors(FilesInterceptor('files'))
   async uploadFile(@UploadedFiles() files: Express.Multer.File[]) {
-    console.log(files);
     if (files) {
       return this.fileService.compressFiles(files);
     } else {
