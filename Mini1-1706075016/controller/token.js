@@ -22,10 +22,7 @@ module.exports = async (req, res, _) => {
     },
   });
   if (!user) {
-    return res.status(401).json({
-      error: "invalid_credential",
-      error_description: "Data yang dimasukkan tidak ada yang cocok.",
-    });
+    return ErrorInvalidRequest(res);
   }
   var startDate = new Date();
   const expiresTill = 300; // In second
@@ -65,15 +62,54 @@ module.exports = async (req, res, _) => {
     },
   });
 
-  const userUpdate = await prisma.user.update({
-    data: {
-      AccessToken: accessTokenCreation,
-      RefreshToken: refreshTokenCreation,
+  const userUpdate = await prisma.user.upsert({
+    where: {
+      id: user.id,
     },
-    create: {},
+    update: {
+      AccessToken: {
+        update: {
+          id: accessTokenCreation.id,
+          accessToken: accessTokenCreation.accessToken,
+          created_at: accessTokenCreation.created_at,
+          expiresIn: accessTokenCreation.expiresIn,
+        },
+      },
+      RefreshToken: {
+        update: {
+          id: refreshTokenCreation.id,
+          refreshToken: refreshTokenCreation.refreshToken,
+          created_at: refreshTokenCreation.created_at,
+          expiresIn: refreshTokenCreation.expiresIn,
+        },
+      },
+    },
+    create: {
+      id: user.id,
+      username: user.username,
+      password: user.password,
+      clientId: user.clientId,
+      clientSecret: user.clientSecret,
+      fullName: user.fullName,
+      npm: user.npm,
+      AccessToken: {
+        create: {
+          id: accessTokenCreation.id,
+          accessToken: accessTokenCreation.accessToken,
+          created_at: accessTokenCreation.created_at,
+          expiresIn: accessTokenCreation.expiresIn,
+        },
+      },
+      RefreshToken: {
+        create: {
+          id: refreshTokenCreation.id,
+          refreshToken: refreshTokenCreation.refreshToken,
+          created_at: refreshTokenCreation.created_at,
+          expiresIn: refreshTokenCreation.expiresIn,
+        },
+      },
+    },
   });
-
-  console.log(userUpdate);
 
   return res.json({
     access_token: accessToken,

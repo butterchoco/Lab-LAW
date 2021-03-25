@@ -22,12 +22,13 @@ const validate = (cb) => {
       },
     });
 
+    if (!accessToken) {
+      return ErrorInvalidToken(res);
+    }
     var startDate = new Date();
     const expires =
       (accessToken.expiresIn.getTime() - startDate.getTime()) / 1000;
-    if (!accessToken) {
-      return ErrorInvalidToken(res);
-    } else if (expires < 0) {
+    if (expires < 0) {
       return res.json({
         error: "invalid_token",
         error_description: "Masa Access Token sudah habis",
