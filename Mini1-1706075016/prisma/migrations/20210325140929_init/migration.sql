@@ -31,13 +31,10 @@ CREATE TABLE "User" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "RefreshToken.userId_unique" ON "RefreshToken"("userId");
+CREATE UNIQUE INDEX "RefreshToken_userId_unique" ON "RefreshToken"("userId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "AccessToken.userId_unique" ON "AccessToken"("userId");
-
--- CreateIndex
-CREATE UNIQUE INDEX "User.id_unique" ON "User"("id");
+CREATE UNIQUE INDEX "AccessToken_userId_unique" ON "AccessToken"("userId");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "User.clientId_unique" ON "User"("clientId");

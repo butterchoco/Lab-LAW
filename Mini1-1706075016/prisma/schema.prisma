@@ -16,7 +16,7 @@ model RefreshToken {
   refreshToken      String
   created_at        DateTime        @default(now())
   expiresIn         DateTime
-  userId            String?         @unique()
+  userId            String?
   User              User?           @relation(fields: [userId], references: [id])
 }
 
@@ -25,12 +25,12 @@ model AccessToken {
   accessToken       String
   created_at        DateTime        @default(now())
   expiresIn         DateTime
-  userId            String?         @unique()
+  userId            String?
   User              User?           @relation(fields: [userId], references: [id])
 }
 
 model User {
-  id                String          @unique   @id
+  id                String          @id
   clientId          String          @unique
   clientSecret      String          @unique
   username          String          @unique
