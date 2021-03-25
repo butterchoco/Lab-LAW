@@ -1,5 +1,6 @@
-var express = require("express");
-var router = express.Router();
+const express = require("express");
+const router = express.Router();
+
 const ErrorInvalidRequest = require("../utils/errorHandler")
   .ErrorInvalidRequest;
 const ErrorInvalidToken = require("../utils/errorHandler").ErrorInvalidToken;
@@ -17,13 +18,13 @@ router.post("/resource", (req, res, _) => {
     return ErrorInvalidToken(res);
   }
   return res.json({
-    access_token: "d8c1ef9ac7a01a2524941a1d029f2aae5786",
     client_id: "7162",
     user_id: "unicorn",
     full_name: "Budi Anduk",
     npm: "1406123456",
-    expires: null,
     refresh_token: "a5a4a1d029f2aae5786d8c1ef9ac7a01a2524941",
+    access_token: "d8c1ef9ac7a01a2524941a1d029f2aae5786",
+    expires: null,
   });
 });
 

@@ -1,0 +1,39 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+model RefreshToken {
+  id                Int       @default(autoincrement()) @id
+  refreshToken      String
+  expiresIn         DateTime
+  userId            Int       @unique()
+  User              User      @relation(fields: [userId], references: [id])
+}
+
+model AccessToken {
+  id                Int    @default(autoincrement()) @id
+  accessToken       String
+  expiresIn         DateTime
+  userId            Int       @unique()
+  User              User      @relation(fields: [userId], references: [id])
+}
+
+model User {
+  id                Int             @id @default(autoincrement())
+  clientId          String          @unique
+  clientSecret      String          @unique
+  fullName          String
+  npm               String
+  scope             String?
+  RefreshToken      RefreshToken?
+  AccessToken       AccessToken?
+}
