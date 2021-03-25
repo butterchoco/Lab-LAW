@@ -12,25 +12,29 @@ generator client {
 
 
 model RefreshToken {
-  id                Int       @default(autoincrement()) @id
+  id                Int             @default(autoincrement()) @id
   refreshToken      String
+  created_at        DateTime        @default(now())
   expiresIn         DateTime
-  userId            Int       @unique()
-  User              User      @relation(fields: [userId], references: [id])
+  userId            String?         @unique()
+  User              User?           @relation(fields: [userId], references: [id])
 }
 
 model AccessToken {
-  id                Int    @default(autoincrement()) @id
+  id                Int             @default(autoincrement()) @id
   accessToken       String
+  created_at        DateTime        @default(now())
   expiresIn         DateTime
-  userId            Int       @unique()
-  User              User      @relation(fields: [userId], references: [id])
+  userId            String?         @unique()
+  User              User?           @relation(fields: [userId], references: [id])
 }
 
 model User {
-  id                Int             @id @default(autoincrement())
+  id                String          @unique   @id
   clientId          String          @unique
   clientSecret      String          @unique
+  username          String          @unique
+  password          String
   fullName          String
   npm               String
   scope             String?
