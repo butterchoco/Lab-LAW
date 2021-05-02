@@ -11,7 +11,6 @@ var client = Stomp.over(ws);
 client.debug = null;
 
 const onSendMessage = (e) => {
-  console.log("test");
   const message = $(".message__input input[type=text]").val();
   client.send(
     "/queue/room-public",
