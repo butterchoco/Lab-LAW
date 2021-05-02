@@ -11,10 +11,9 @@ amqp.connect("amqp://localhost", function (error0, connection) {
 
     channel.assertExchange("time", "fanout", { durable: false });
 
-    let time;
+    publishTime(channel);
     setInterval(() => {
-      time = new Date().toLocaleTimeString();
-      channel.publish("time", "", Buffer.from(time));
+      publishTime(channel);
     }, 60000);
 
     var queue = "room-public";
@@ -40,3 +39,8 @@ amqp.connect("amqp://localhost", function (error0, connection) {
     });
   });
 });
+
+function publishTime(channel) {
+  const time = new Date().toLocaleTimeString().split(":").slice(0, 2).join(":");
+  channel.publish("time", "", Buffer.from(time));
+}
