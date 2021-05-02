@@ -15,7 +15,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
     setInterval(() => {
       time = new Date().toLocaleTimeString();
       channel.publish("time", "", Buffer.from(time));
-    }, 1000);
+    }, 60000);
 
     var queue = "room-public";
 
