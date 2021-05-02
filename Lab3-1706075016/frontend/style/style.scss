@@ -1,0 +1,159 @@
+$primary: #4361ee;
+$white: #ffffff;
+$light-white: #f8f9fa;
+$black: #293241;
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+main {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: $light-white;
+}
+
+h2 {
+  margin: 0;
+}
+
+#time {
+  margin: 0;
+  font-size: 12px;
+  color: rgba($color: $black, $alpha: 0.5);
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  background-color: $white;
+  min-width: 50%;
+  max-width: 60%;
+  min-height: 400px;
+  max-height: 400px;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 0 6px rgba($color: $black, $alpha: 0.012);
+
+  &__container {
+    margin-top: 10px;
+    flex: 1;
+    border: 2px solid $light-white;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__container > div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__input {
+    flex-basis: 32px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+
+    input {
+      flex: 1;
+      margin-bottom: 5px;
+    }
+  }
+
+  &__chat {
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+
+    &__time,
+    &__user {
+      font-size: 12px;
+      margin: 0;
+      padding: 0;
+      color: rgba($color: $black, $alpha: 0.5);
+    }
+
+    &--other &__time {
+      align-self: flex-end;
+    }
+
+    &--me &__time {
+      align-self: flex-start;
+    }
+
+    &__user {
+      align-self: flex-start;
+    }
+
+    &__content {
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 5px;
+      align-self: flex-start;
+    }
+
+    &--other {
+      align-self: flex-start;
+    }
+
+    &--me {
+      align-self: flex-end;
+    }
+
+    &--other &__content {
+      background-color: $light-white;
+      color: $black;
+    }
+
+    &--me &__content {
+      background-color: $primary;
+      color: $white;
+    }
+  }
+}
+
+input {
+  border: 1px solid darken($light-white, 10%);
+  border-radius: 5px;
+  background-color: $light-white;
+  padding: 5px 10px;
+  font-weight: bold;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.btn {
+  border: 1px solid transparent;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+
+  &-primary {
+    background-color: $primary;
+    color: $white;
+
+    &:hover {
+      background-color: darken($primary, 5%);
+    }
+
+    &:active {
+      background-color: darken($primary, 10%);
+    }
+  }
+}
