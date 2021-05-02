@@ -10,11 +10,12 @@ amqp.connect("amqp://localhost", function (error0, connection) {
     }
 
     channel.assertExchange("time", "fanout", { durable: false });
+    channel.assertExchange("room-public", "topic", { durable: false });
 
     publishTime(channel);
     setInterval(() => {
       publishTime(channel);
-    }, 60000);
+    }, 1000);
 
     var queue = "room-public";
 
@@ -30,6 +31,7 @@ amqp.connect("amqp://localhost", function (error0, connection) {
         .split(":")
         .slice(0, 2)
         .join(":");
+      console.log(response);
       channel.publish(
         queue,
         msg.properties.headers["room-id"],
