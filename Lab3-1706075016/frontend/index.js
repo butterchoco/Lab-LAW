@@ -1,7 +1,11 @@
 if (!("WebSocket" in window)) alert("Websocket is not supported in browser");
 
 var user;
-if (!window.localStorage.getItem("user")) user = prompt("Masukkan username:");
+if (!window.localStorage.getItem("user")) {
+  while (!user) {
+    user = prompt("Masukkan username:");
+  }
+}
 window.localStorage.setItem("user", user);
 const urlParams = new URLSearchParams(window.location.search);
 var roomId = urlParams.get("id") || "test";
