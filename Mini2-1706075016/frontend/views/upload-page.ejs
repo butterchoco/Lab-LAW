@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload File</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="/js/upload.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <div class="input-group">
+        <input name="input-file" type="file" multiple />
+      </div>
+      <button id="upload-file" type="submit" class="btn btn-primary">
+        Upload
+      </button>
+    </main>
+    <div class="modal"></div>
+  </body>
+</html>
