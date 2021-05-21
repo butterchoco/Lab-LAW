@@ -1,8 +1,10 @@
 const express = require("express");
-const HomeController = require("../controller/HomeController");
+const DownloadController = require("../controller/DownloadController");
+const HomeController = require("../controller/DownloadController");
 
 const router = express.Router();
 
-router.get("/:filename", HomeController);
+router.get("/:filename", DownloadController);
+router.get("/", HomeController);
 
 module.exports = router;
