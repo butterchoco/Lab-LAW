@@ -23,7 +23,7 @@ const uploadFilePromise = (files) => {
     formData.append("files", file);
   }
 
-  fetch("/", {
+  fetch("/upload/", {
     method: "POST",
     body: formData,
   })
