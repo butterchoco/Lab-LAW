@@ -8,6 +8,8 @@ const DownloadController = (req, res) => {
     if (fs.existsSync(path)) {
       logger.debug.debug("Get download file: " + filename);
       res.download(path);
+    } else {
+      res.status(400).json({ error: `File ${filename} Not Found.` });
     }
   } catch (err) {
     res.status(400).json({ error: "File Not Found." });
