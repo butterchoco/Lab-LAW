@@ -23,7 +23,7 @@ const uploadFilePromise = (files) => {
     formData.append("files", file);
   }
 
-  fetch("https://0.0.0.0:8001/", {
+  fetch("/upload/", {
     method: "POST",
     body: formData,
   })
