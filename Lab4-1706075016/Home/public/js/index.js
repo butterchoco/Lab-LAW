@@ -73,5 +73,19 @@ const download = () => {
   filesInput.forEach((e) => {
     if (e.checked) filesChecked.push(e.getAttribute("id"));
   });
-  console.log(filesChecked);
+  if (filesChecked.length === 1) {
+    window.location = "/download/" + JSON.stringify([filesChecked[0]]);
+    return;
+  }
+  fetch("/download/" + JSON.stringify(filesChecked), {
+    method: "GET",
+  })
+    .then((response) => response.json())
+    .then(({ url }) => {
+      window.location = "/download/" + JSON.stringify([url]);
+    })
+    .catch((error) => {
+      alert(error);
+      console.error("Error:", error);
+    });
 };

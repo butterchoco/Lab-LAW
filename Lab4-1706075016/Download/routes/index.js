@@ -5,6 +5,9 @@ const HomeController = require("../controller/HomeController");
 const router = express.Router();
 
 router.get("/", HomeController);
-router.get("/:filename", DownloadController);
+router.get(
+  process.env.NODE_ENV === "production" ? "/:filename" : "/download/:filename",
+  DownloadController
+);
 
 module.exports = router;

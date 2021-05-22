@@ -6,7 +6,7 @@ var cookieParser = require("cookie-parser");
 var cors = require("cors");
 const createError = require("http-errors");
 
-const corsOptions = { origin: ["*"] };
+const corsOptions = { origin: "*" };
 app.use(cors(corsOptions));
 app.set("view engine", "ejs");
 app.use(express.json());
