@@ -41,40 +41,47 @@ main {
 
   .file {
     flex-basis: 240px;
-    padding: 1rem;
-    background-color: transparent;
-    border-radius: 10px;
-    border: 1px solid rgba($color: $black, $alpha: 0.12);
     outline: none;
     text-decoration: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     max-height: 240px;
-    flex-direction: column;
-    cursor: pointer;
+    position: relative;
 
     @media screen and (max-width: 425px) {
       flex: 1;
       max-width: 50%;
       min-width: 160px;
-      padding: 10px 5px;
     }
 
     @media screen and (max-width: 325px) {
       flex: 1;
       max-width: 50%;
       min-width: 120px;
-      padding: 10px 5px;
     }
 
     &:hover {
       background-color: rgba($color: $black, $alpha: 0.12);
     }
 
-    &:focus,
-    &:active {
-      background-color: rgba($color: $black, $alpha: 0.24);
+    input {
+      display: none;
+
+      &:checked + .file--wrapper {
+        background-color: rgba($color: $black, $alpha: 0.24);
+      }
+    }
+
+    &--wrapper {
+      width: 100%;
+      height: 100%;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+      background-color: transparent;
+      border: 1px solid rgba($color: $black, $alpha: 0.12);
+      cursor: pointer;
     }
 
     svg {
@@ -93,7 +100,7 @@ main {
   }
 }
 
-#context-menu {
+.context-menu {
   position: absolute;
   box-shadow: 0 0 4px rgba($color: $black, $alpha: 0.12);
   border-radius: 5px;
@@ -105,12 +112,10 @@ main {
     padding: 0;
     list-style: none;
 
-    a {
-      text-decoration: none;
-    }
-
     li {
       padding: 10px 1rem;
+      cursor: pointer;
+
       &:hover {
         background-color: rgba($color: $primary, $alpha: 0.12);
       }
