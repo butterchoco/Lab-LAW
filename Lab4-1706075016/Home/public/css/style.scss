@@ -16,16 +16,46 @@ body {
 
 body {
   position: relative;
-  overflow: hidden;
+  background-color: $light-white;
 }
 
 main {
-  width: 100%;
-  min-height: 100vh;
+  margin: 5vh 5vw;
+}
+
+.form {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: $light-white;
+}
+
+.documents-available {
+  display: flex;
+  flex-wrap: wrap;
+
+  .file {
+    margin: 5px;
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid rgba($color: $black, $alpha: 0.12);
+    outline: none;
+    text-decoration: none;
+
+    &:hover {
+      background-color: rgba($color: $black, $alpha: 0.12);
+    }
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+
+      svg {
+        height: 64px;
+      }
+
+      p {
+        margin-top: 1rem;
+      }
+    }
+  }
 }
 
 input {
