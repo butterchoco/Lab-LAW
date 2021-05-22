@@ -1,15 +1,47 @@
 const documentsList = document.querySelector(".documents-available");
 
+documentsList.addEventListener("contextmenu", (e) => {
+  e.preventDefault();
+});
+
+const fileEventListener = () => {
+  const file = document.querySelectorAll(".file");
+  file.forEach((f) => {
+    f.addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+      let menu = document.createElement("div");
+      menu.setAttribute("id", "context-menu");
+      menu.style.left = e.pageX + "px";
+      menu.style.top = e.pageY - 50 + "px";
+      const href = f.getAttribute("data-href");
+      menu.innerHTML = `
+      <ul>
+      <a href=${href}><li>Download</li></a>
+      </ul>
+      `;
+      document.body.append(menu);
+    });
+  });
+};
+
 fetch("/drive", {
   method: "GET",
 })
   .then((response) => response.json())
   .then(({ files }) => {
     let html = "";
-    for (const file of files) {
-      html += `<a class="file" href="/upload/${file}"><div><svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file" class="svg-inline--fa fa-file fa-w-12" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm160-14.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"></path></svg><p>${file}</p></div></a>`;
+    for (let file of files) {
+      let filename = file;
+      if (window.innerWidth < 425 && file.length > 8)
+        filename = file.slice(0, 8) + " . . . " + file.slice(-8);
+      html += `
+      <button class="file" data-href="/download/${file}">
+      <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="file" class="svg-inline--fa fa-file fa-w-12" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path fill="currentColor" d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm160-14.1v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"></path></svg>
+      <p>${filename}</p>
+      </button>`;
     }
     documentsList.innerHTML = html;
+    fileEventListener();
   })
   .catch((error) => {
     alert(error);

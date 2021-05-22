@@ -28,37 +28,98 @@ main {
 }
 
 .documents-available {
-  display: flex;
-  flex-wrap: wrap;
+  margin-top: 1rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+
+  @media screen and (max-width: 425px) {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
 
   .file {
-    margin: 5px;
+    flex-basis: 240px;
     padding: 1rem;
+    background-color: transparent;
     border-radius: 10px;
     border: 1px solid rgba($color: $black, $alpha: 0.12);
     outline: none;
     text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-height: 240px;
+    flex-direction: column;
+    cursor: pointer;
+
+    @media screen and (max-width: 425px) {
+      flex: 1;
+      max-width: 50%;
+      min-width: 160px;
+      padding: 10px 5px;
+    }
+
+    @media screen and (max-width: 325px) {
+      flex: 1;
+      max-width: 50%;
+      min-width: 120px;
+      padding: 10px 5px;
+    }
 
     &:hover {
       background-color: rgba($color: $black, $alpha: 0.12);
     }
 
-    & > div {
-      display: flex;
-      flex-direction: column;
+    &:focus,
+    &:active {
+      background-color: rgba($color: $black, $alpha: 0.24);
+    }
 
-      svg {
-        height: 64px;
+    svg {
+      flex: 1;
+      height: 100%;
+
+      path {
+        fill: rgba($color: $black, $alpha: 0.24);
       }
+    }
 
-      p {
-        margin-top: 1rem;
+    p {
+      text-align: center;
+      margin-top: 1rem;
+    }
+  }
+}
+
+#context-menu {
+  position: absolute;
+  box-shadow: 0 0 4px rgba($color: $black, $alpha: 0.12);
+  border-radius: 5px;
+  background-color: #ffffff;
+  padding: 0;
+
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    a {
+      text-decoration: none;
+    }
+
+    li {
+      padding: 10px 1rem;
+      &:hover {
+        background-color: rgba($color: $primary, $alpha: 0.12);
       }
     }
   }
 }
 
 input {
+  width: 100%;
   border: 1px solid darken($light-white, 10%);
   border-radius: 5px;
   background-color: $light-white;
