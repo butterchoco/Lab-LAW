@@ -3,7 +3,7 @@ const { APP_NAME } = require("../util/Constants");
 
 const HomeController = (_, res) => {
   logger.debug.debug("Route to home");
-  res.render("pages/index", { AppName: APP_NAME });
+  res.send("Upload page.");
 };
 
 module.exports = HomeController;

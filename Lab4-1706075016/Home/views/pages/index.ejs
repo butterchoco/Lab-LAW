@@ -2,10 +2,20 @@
 <html lang="en">
   <head>
     <%- include('../partials/head'); %>
+    <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
-    <a href="/upload">Upload Documents</a>
+    <main>
+      <div class="input-group">
+        <input name="input-file" type="file" multiple />
+      </div>
+      <button id="upload-file" type="submit" class="btn btn-primary">
+        Upload
+      </button>
+    </main>
+    <div class="modal"></div>
     <ul class="documents-available"></ul>
     <script src="/js/index.js"></script>
+    <script src="/js/upload.js"></script>
   </body>
 </html>

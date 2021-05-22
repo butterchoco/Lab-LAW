@@ -7,7 +7,7 @@ fetch("/drive", {
   .then(({ files }) => {
     let html = "";
     for (const file of files) {
-      html += `<li><a href="/download/${file}">${file}</a></li>`;
+      html += `<li><a href="http://0.0.0.0:8002/${file}">${file}</a></li>`;
     }
     documentsList.innerHTML = html;
   })
