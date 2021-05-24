@@ -1,3 +1,4 @@
+const getFilesInDrive = () => {
 fetch("/drive", {
   method: "GET",
 })
@@ -17,13 +18,16 @@ fetch("/drive", {
         </div>
       </div>`;
     }
-    documentsList.innerHTML = html;
+    documentsList.innerHTML = html || "Tidak ada file diupload.";
     fileEventListener();
   })
   .catch((error) => {
     alert(error);
     console.error("Error:", error);
   });
+}
+
+getFilesInDrive();
 
 const documentsList = document.querySelector(".documents-available");
 documentsList.addEventListener("click", (e) => {
