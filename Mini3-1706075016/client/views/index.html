@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Downloader</title>
+    <script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="/js/modal.js" defer></script>
+    <script src="/js/uuid.js" defer></script>
+    <script src="/js/download.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <div class="form">
+        <div class="form-group">
+          <label for="download">Download Url</label>
+          <input
+            placeholder="Masukkan url di sini..."
+            id="download"
+            name="download"
+            type="text"
+            required
+            autocomplete="url"
+          />
+        </div>
+        <button id="download-button" type="submit" class="btn btn-primary">
+          Download
+        </button>
+      </div>
+    </main>
+    <div class="modal"></div>
+  </body>
+</html>
