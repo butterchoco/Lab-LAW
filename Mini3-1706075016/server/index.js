@@ -31,6 +31,7 @@ Server.addService(MiniProto.MiniProjectService.service, {
         const npm = "1706075016";
         const id = uuidv4();
         channel.assertExchange(npm, "topic", { durable: false });
+
         const publish = {
           json: function (obj) {
             channel.publish(npm, id, Buffer.from(JSON.stringify(...obj)));
