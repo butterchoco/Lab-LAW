@@ -37,6 +37,8 @@ const uploadFilePromise = (files) => {
       successModal.innerHTML = message;
       modal.append(successModal);
 
+      getFilesInDrive();
+
       setTimeout(() => {
         successModal.hidden = true;
       }, 2000);
