@@ -17,8 +17,21 @@ Server.addService(MiniProto.MiniProjectService.service, {
         details: "Not found",
       });
     }
-    let response;
-    callback(null, response);
+    const download = spawn("wget", [url, "-O", `${uuidv4}.`]);
+    download.stderr.on("data", (data) => {
+      const str = data.toString();
+      if (str.includes("%")) {
+        const progress = str.match(/ (.*)%/)[0];
+        console.log(progress);
+      } else if (str.includes("saved")) {
+        const filename = str.match(/‘(.*)’/)[1];
+        console.log(filename);
+      }
+    });
+    download.on("close", () => {
+      let response = { url, id };
+      callback(null, response);
+    });
   },
 });
 
