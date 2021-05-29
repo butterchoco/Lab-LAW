@@ -12,24 +12,18 @@ Server.addService(MiniProto.miniproject3.MiniProjectService.service, {
   Download: (call, callback) => {
     const { url } = call.request;
 
-    if (err) {
-      callback({
-        code: status.NOT_FOUND,
-        details: "Not found",
-      });
-    }
-
-    amqp.connect("amqp://localhost", (error0, { createChannel }) => {
+    amqp.connect("amqp://localhost", (error0, connection) => {
       if (error0) {
         throw error0;
       }
-      createChannel(function (error1, channel) {
+      connection.createChannel(function (error1, channel) {
         if (error1) {
           throw error1;
         }
 
         const npm = "1706075016";
         const id = uuid();
+        console.log(id);
         channel.assertExchange(npm, "topic", { durable: false });
 
         const publish = {

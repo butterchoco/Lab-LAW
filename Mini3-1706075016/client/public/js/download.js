@@ -9,17 +9,19 @@ const submitButton = document.querySelector(
   "form[name=downloaderForm] button[type=submit]"
 );
 
-const submit = () => {
+const baseurl = "http://localhost:3000";
+const submit = (e) => {
+  e.preventDefault();
   const data = {
     url: formInput["download"].value,
   };
   fetch(baseurl + "/download", {
     method: "POST",
-    body: data,
+    body: JSON.stringify(data),
   })
     .then((response) => response.json())
     .then(({ url, id }) => {
-      createModal({ key: id, type: progress });
+      createModal({ key: id, type: "progress" });
       client.subscribe("/exchange/1706075016/" + id, onMessage(url, id));
     })
     .catch((error) => {
@@ -31,9 +33,8 @@ const onMessage = (originalUrl, id) => {
   return function (m) {
     const { progress, url } = JSON.parse(m.body);
 
-    updateProgressModal({ key: id, progress });
-
-    if (url) {
+    if (progress) updateProgressModal({ key: id, progress });
+    else if (url) {
       setTimeout(() => {
         $(`#${id}`).remove();
       }, 2000);

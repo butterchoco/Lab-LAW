@@ -1,1 +1,1 @@
-TODO: create rabbitmq client progress
+run docker compose
