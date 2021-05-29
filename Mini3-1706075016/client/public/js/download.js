@@ -17,10 +17,14 @@ const submit = (e) => {
   };
   fetch(baseurl + "/download", {
     method: "POST",
+    headers: {
+      'Content-Type': 'application/json'
+    },
     body: JSON.stringify(data),
   })
     .then((response) => response.json())
-    .then(({ url, id }) => {
+    .then(({ url, uniq_id }) => {
+    	const id = uniq_id;
       createModal({ key: id, type: "progress" });
       client.subscribe("/exchange/1706075016/" + id, onMessage(url, id));
     })
@@ -33,14 +37,12 @@ const onMessage = (originalUrl, id) => {
   return function (m) {
     const { progress, url } = JSON.parse(m.body);
 
-    if (progress) updateProgressModal({ key: id, progress });
+    if (progress) updateProgressModal({ key: id, progress, html: `<p>Progress: ${progress}%</p>` });
     else if (url) {
-      setTimeout(() => {
         $(`#${id}`).remove();
-      }, 2000);
 
       createModal({
-        key,
+        key: id,
         type: "url",
         html: `<a href="${url}">Download Link</a>`,
       });

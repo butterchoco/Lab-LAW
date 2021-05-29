@@ -23,14 +23,16 @@ Server.addService(MiniProto.miniproject3.MiniProjectService.service, {
 
         const npm = "1706075016";
         const id = uuid();
-        console.log(id);
         channel.assertExchange(npm, "topic", { durable: false });
 
         const publish = {
           json: function (obj) {
-            channel.publish(npm, id, Buffer.from(JSON.stringify(...obj)));
+            channel.publish(npm, id, Buffer.from(JSON.stringify(obj)));
           },
         };
+        
+        let response = { url, uniq_id: id };
+        callback(null, response);
 
         const download = spawn("wget", [url, "-P", "../saved"]);
         let filename;
@@ -38,16 +40,14 @@ Server.addService(MiniProto.miniproject3.MiniProjectService.service, {
           const str = data.toString();
           if (str.includes("%")) {
             const progress = str.match(/(.*) (.*)%/)[2];
-            publish.json(progress);
+            publish.json({progress});
           } else if (str.includes("saved")) {
-            filename = str.match(/‘(.*)’/)[1];
+            filename = str.match(/‘(.*)’/)[1].split("/")[2];
           }
         });
         download.on("close", () => {
           publish.json({ url: "http://localhost:3000/download/" + filename });
         });
-        let response = { url, id };
-        callback(null, response);
       });
     });
   },

@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 app.get("/", render(path.join(__dirname, "views", "index.html")));
-app.get("/download", (req, res) => {
+app.get("/download/:filename", (req, res) => {
   const { filename } = req.params;
   res.download("../saved/" + filename);
 });

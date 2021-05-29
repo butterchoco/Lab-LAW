@@ -1,4 +1,4 @@
-const PROTO_PATH = "./miniproject3.proto";
+const PROTO_PATH = "../miniproject3.proto";
 
 var grpc = require("grpc");
 var protoLoader = require("@grpc/proto-loader");

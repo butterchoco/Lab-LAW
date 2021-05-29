@@ -20,9 +20,9 @@ const createModal = ({ key, type, html }) => {
   }, 10000);
 };
 
-const updateProgressModal = ({ key, message, progress }) => {
-  document.querySelector(`#${key}`).innerHTML = `<div class="modal-progress">
-      ${message || ""}
+const updateProgressModal = ({ key, html, progress }) => {
+  document.getElementById(key).innerHTML = `<div class="modal-progress">
+      ${html || ""}
       ${progressTag(progress)}
     </div>`;
 };
