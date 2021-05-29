@@ -10,7 +10,7 @@ const packageDefinition = protoLoader.loadSync(PROTO_PATH, {
   oneofs: true,
 });
 
-const MiniProto = grpc.loadPackageDefinition(packageDefinition);
+const MiniProto = grpc.loadPackageDefinition(packageDefinition).miniproject3;
 const MiniProjectService = new MiniProto.MiniProjectService(
   "0.0.0.0:3123",
   grpc.credentials.createInsecure()

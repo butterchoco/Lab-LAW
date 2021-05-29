@@ -16,6 +16,6 @@ const MiniProto = grpc.loadPackageDefinition(packageDefinition);
 module.exports = {
   Server,
   MiniProto,
-  ServerCredential: grpc.ServerCredential,
+  ServerCredentials: grpc.ServerCredentials,
   status: grpc.status,
 };

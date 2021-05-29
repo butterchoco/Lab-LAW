@@ -3,8 +3,9 @@ var fs = require("fs"),
 
 const render = (url) => {
   return (req, res) => {
-    fs.readFile(path.join(__dirname, url), (err, data) => {
+    fs.readFile(url, (err, data) => {
       if (err) {
+        console.log(err);
         res.writeHead(404);
         res.end("404 Not Found");
         return;

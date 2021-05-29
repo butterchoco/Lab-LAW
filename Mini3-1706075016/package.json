@@ -1,0 +1,19 @@
+{
+  "name": "mini3-1706075016",
+  "version": "1.0.0",
+  "description": "TODO: create rabbitmq client progress",
+  "main": "index.js",
+  "scripts": {
+    "client": "node client/index.js",
+    "server": "node server/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@grpc/proto-loader": "^0.6.2",
+    "amqplib": "^0.8.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "grpc": "^1.24.10"
+  }
+}

@@ -1,6 +1,6 @@
 const amqp = require("amqplib/callback_api");
 const { spawn } = require("child_process");
-const { v4: uuidv4 } = require("uuid");
+const { uuid } = require("./utils/uuid");
 const {
   Server,
   MiniProto,
@@ -8,8 +8,8 @@ const {
   status,
 } = require("./protoConfig");
 
-Server.addService(MiniProto.MiniProjectService.service, {
-  get: (call, callback) => {
+Server.addService(MiniProto.miniproject3.MiniProjectService.service, {
+  Download: (call, callback) => {
     const { url } = call.request;
 
     if (err) {
@@ -29,7 +29,7 @@ Server.addService(MiniProto.MiniProjectService.service, {
         }
 
         const npm = "1706075016";
-        const id = uuidv4();
+        const id = uuid();
         channel.assertExchange(npm, "topic", { durable: false });
 
         const publish = {

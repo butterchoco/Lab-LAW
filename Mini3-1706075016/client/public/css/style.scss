@@ -1,5 +1,6 @@
 $primary: #4361ee;
 $white: #ffffff;
+$red: #da1818;
 $light-white: #f8f9fa;
 $black: #293241;
 
@@ -82,41 +83,32 @@ a {
 }
 
 .modal {
-  position: absolute;
-  bottom: 1rem;
-  left: 50%;
-  transform: translate(-50%, 200%);
-  transition: transform 0.4s cubic-bezier(0.31, 0.68, 0.61, 0.88);
   display: flex;
   flex-direction: column;
+  margin: 10px 0;
+  transition: opacity 0.4s cubic-bezier(0.31, 0.68, 0.61, 0.88);
 
   &-body {
     padding: 10px 20px;
     box-shadow: 0px 0px 10px rgba($color: $black, $alpha: 0.12);
     border: 1px solid rgba($color: $black, $alpha: 0.12);
     border-radius: 5px;
+    background-color: $white;
+    color: $black;
+  }
+
+  &-danger {
+    background-color: $red;
+    color: $white;
   }
 
   &-success {
-    background-color: rgb(9, 192, 161);
-    color: $white;
-  }
-
-  &-url {
     background-color: $primary;
     color: $white;
-
-    a {
-      color: white;
-    }
   }
 
   &-progress {
-    background-color: $white;
-    color: $black;
-    margin: 10px 0;
-
-    p {
+    progress {
       margin: 2px;
     }
   }
