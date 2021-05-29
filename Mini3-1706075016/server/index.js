@@ -12,6 +12,7 @@ Server.addService(MiniProto.miniproject3.MiniProjectService.service, {
   Download: (call, callback) => {
     const { url } = call.request;
 
+    console.log(url)
     amqp.connect("amqp://localhost", (error0, connection) => {
       if (error0) {
         throw error0;
